@@ -72,6 +72,7 @@ let handlers = {
                 params: image
             }));
         }, 1000 / FPS)
+        broadcast('Cam feed has started')
     },
     "engine": function (m) {
         // needs to be implemented

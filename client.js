@@ -13,7 +13,7 @@ ws.addEventListener('message', (e) => {
         let m = JSON.parse(e.data);
         handleMessage(m);
     } catch (err) {
-        console.log('[client] Not parseable to JSON:' + e.data);
+        console.log('[client] ' + e.data);
     }
 });
 
