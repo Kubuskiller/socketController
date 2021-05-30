@@ -2,7 +2,7 @@
 A websocket server that inited to be run on Raspberry Pi, to recieve input that controls the motors connected to it. And a client side with joysticks as input and recieves a constant stream of the cam from the server (raspberry).
 
 
-# How to use notes #
+# How to use #
 1. clone repo
 2. npm install 
 3. wait and hope for openCV4nodejs ( big library (1.5gb) and pain in the ass I needed windows build tool aswell)
