@@ -1,5 +1,6 @@
 # socketController
 
+#How to use notes#
 1. clone repo
 2. npm install 
 3. wait and hope for openCV4nodejs ( big library (1.5gb) and pain in the ass I needed windows build tool aswell)
