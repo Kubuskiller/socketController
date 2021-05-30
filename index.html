@@ -6,8 +6,24 @@
 </head>
 
 <body>
+    <!-- recieve frames -->
     <img id="image">
-    Hello
+    Hello -> check console
+
+    <!-- JoySticks -->
+    <div id="rightStickDiv" style="width:200px;height:200px;margin:50px"><canvas id="joystick" width="200"
+            height="200"></canvas></div>
+    X :<input id="rightStickX" type="text"><br>
+    Y :<input id="rightStickY" type="text">
+
+    <div id="leftStickDiv" style="width:200px;height:200px;margin:50px"><canvas id="joystick" width="200"
+            height="200"></canvas></div>
+    X :<input id="leftStickX" type="text"><br>
+    Y :<input id="leftStickY" type="text">
+
     <script src="client.js" type="text/javascript"></script>
+    <script src="joystick.js" type="text/javascript"></script>
+
 </body>
+
 </html>

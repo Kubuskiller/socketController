@@ -4,7 +4,7 @@ const cv = require('opencv4nodejs');
 const WebSocket = require('ws');
 const SocketServer = require('ws').Server;
 
-var FPS = 15
+var FPS = 25
 
 const PORT = process.env.PORT || 3000;
 const INDEX = path.join(__dirname, 'index.html');
@@ -66,10 +66,10 @@ let handlers = {
         const wCap = new cv.VideoCapture(1);
         setInterval(() => {
             const frame = wCap.read();
-            const image = cv.imencode('.jpg', frame).toString('base64');
+            const imageString = cv.imencode('.jpg', frame).toString('base64');
             broadcast(JSON.stringify({
                 method: 'image-feed',
-                params: image
+                params: imageString
             }));
         }, 1000 / FPS)
         broadcast('Cam feed has started')
