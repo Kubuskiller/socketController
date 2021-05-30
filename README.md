@@ -1,4 +1,6 @@
 # socketController
+A websocket server that inited to be run on Raspberry Pi, to recieve input that will control the motors connected to the raspberry. And a client side whit joystick as input and recieves a constant stream of frames from the raspberry
+
 
 # How to use notes #
 1. clone repo
