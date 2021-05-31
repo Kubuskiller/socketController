@@ -268,23 +268,34 @@ var JoyStick = (function (container, parameters) {
 var RRPS = 10
 
 var rightStick = new JoyStick('rightStickDiv');
-var rightStickX = document.getElementById("rightStickX");
-var rightStickY = document.getElementById("rightStickY");
-
-setInterval(function () {
-	rightStickX.value = rightStick.GetX();
-}, 1000 / RRPS);
-setInterval(function () {
-	rightStickY.value = rightStick.GetY();
-}, 1000 / RRPS);
-
 var leftStick = new JoyStick('leftStickDiv');
-var leftStickX = document.getElementById("leftStickX");
-var leftStickY = document.getElementById("leftStickY");
+
+
+// wait for ws connection before crash
+setInterval(function () {
+	RSX = rightStick.GetX();
+	RSY = rightStick.GetY();
+	if (RSX && RSY != 0) {
+		ws.send(JSON.stringify({
+			method: 'rightStick',
+			params: {
+				x: RSX,
+				y: RSY
+			}
+		}));
+	}
+}, 1000 / RRPS);
 
 setInterval(function () {
-	leftStickX.value = leftStick.GetX();
-}, 1000 / RRPS);
-setInterval(function () {
-	leftStickY.value = leftStick.GetY();
+	LSX = leftStick.GetX();
+	LSY = leftStick.GetY();
+	if (LSX && LSY != 0) {
+		ws.send(JSON.stringify({
+			method: 'leftStick',
+			params: {
+				x: LSX,
+				y: LSY
+			}
+		}));
+	}
 }, 1000 / RRPS);
