@@ -4,10 +4,6 @@ const cv = require('opencv4nodejs');
 const WebSocket = require('ws');
 const SocketServer = require('ws').Server;
 
-var FPS = 25
-var camOpen = true
-
-
 // █░█░█ █▀▀ █▄▄ █▀ █▀█ █▀▀ █▄▀ █▀▀ ▀█▀
 // ▀▄▀▄▀ ██▄ █▄█ ▄█ █▄█ █▄▄ █░█ ██▄ ░█░
 
@@ -34,7 +30,7 @@ wss.on('connection', (ws, request, client) => {
         }
     });
     ws.on('close', (ws) => {
-        if (camOpen) {
+        if (!camOpen) {
             wCap.release();
         }
         console.log('Client disconnected');
@@ -44,6 +40,9 @@ wss.on('connection', (ws, request, client) => {
 
 // █░█ ▄▀█ █▄░█ █▀▄ █▀▀ █░░ █▀▀ █▀█ █▀
 // █▀█ █▀█ █░▀█ █▄▀ ██▄ █▄▄ ██▄ █▀▄ ▄█
+
+var camOpen = true
+var FPS = 25
 
 let handlers = {
     "request-camera": function (m) {
@@ -68,13 +67,30 @@ let handlers = {
         // m.params are x & y position + & - intergers
     },
     "shoot": function (m) {
-        // m.params is true
+        // FIXME: call python script 
+        console.log('[Tank] SHOT HAS BEEN FIRED')
     },
 };
 
 
 // █▀▀ █░█ █▄░█ █▀▀ ▀█▀ █ █▀█ █▄░█ █▀
 // █▀░ █▄█ █░▀█ █▄▄ ░█░ █ █▄█ █░▀█ ▄█
+
+function handleMessage(m) {
+    if (m.method == undefined) {
+        return;
+    }
+    let method = m.method;
+    
+    if (method) {
+        if (handlers[method]) {
+            let handler = handlers[method];
+            handler(m);
+        } else {
+            console.log('[server] ### No handler defined for method ' + method + '.');
+        }
+    }
+};
 
 function broadcast(msg) {
     // Broadcast to everyone else.
@@ -85,18 +101,10 @@ function broadcast(msg) {
     });
 };
 
-function handleMessage(m) {
-    if (m.method == undefined) {
-        return;
-    }
-    let method = m.method;
-
-    if (method) {
-        if (handlers[method]) {
-            let handler = handlers[method];
-            handler(m);
-        } else {
-            console.log('[server] ### No handler defined for method ' + method + '.');
-        }
-    }
+//call this function from python
+function hit(dmg) {
+    broadcast(JSON.stringify({
+        method: 'impact',
+        params: dmg
+    }));
 };
