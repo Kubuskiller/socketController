@@ -23,7 +23,7 @@ ws.addEventListener("open", () => {
 ws.addEventListener('message', (e) => {
     try {
         let m = JSON.parse(e.data);
-        // remove string frames from client log
+        // remove cam frames from client log
         if (m.method != 'frame-feed') {
             console.log('[client] ' + e.data);
         }    
