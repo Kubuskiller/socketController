@@ -11,7 +11,6 @@ var JoyStick = (function (container, parameters) {
 		externalLineWidth = (typeof parameters.externalLineWidth === "undefined" ? 2 : parameters.externalLineWidth),
 		externalStrokeColor = (typeof parameters.externalStrokeColor === "undefined" ? "#ffff" : parameters.externalStrokeColor),
 		autoReturnToCenter = (typeof parameters.autoReturnToCenter === "undefined" ? true : parameters.autoReturnToCenter);
-
 	// Create Canvas element and add it in the Container object
 	var objContainer = document.getElementById(container);
 	var canvas = document.createElement("canvas");
@@ -26,7 +25,6 @@ var JoyStick = (function (container, parameters) {
 	canvas.height = height;
 	objContainer.appendChild(canvas);
 	var context = canvas.getContext("2d");
-
 	var pressed = 0; // Bool - 1=Yes - 0=No
 	var circumference = 2 * Math.PI;
 	var internalRadius = (canvas.width - ((canvas.width / 2) + 10)) / 2;
@@ -41,7 +39,6 @@ var JoyStick = (function (container, parameters) {
 	// Used to save current position of stick
 	var movedX = centerX;
 	var movedY = centerY;
-
 	// Check if the device support the touch or not
 	if ("ontouchstart" in document.documentElement) {
 		canvas.addEventListener("touchstart", onTouchStart, false);
@@ -55,11 +52,9 @@ var JoyStick = (function (container, parameters) {
 	// Draw the object
 	drawExternal();
 	drawInternal();
-
 	/******************************************************
 	 * Private methods
 	 *****************************************************/
-
 	/**
 	 * @desc Draw the external circle used as reference position
 	 */
@@ -70,7 +65,6 @@ var JoyStick = (function (container, parameters) {
 		context.strokeStyle = externalStrokeColor;
 		context.stroke();
 	}
-
 	/**
 	 * @desc Draw the internal stick in the current position the user have moved it
 	 */
@@ -101,14 +95,12 @@ var JoyStick = (function (container, parameters) {
 		context.strokeStyle = internalStrokeColor;
 		context.stroke();
 	}
-
 	/**
 	 * @desc Events for manage touch
 	 */
 	function onTouchStart(event) {
 		pressed = 1;
 	}
-
 	function onTouchMove(event) {
 		// Prevent the browser from doing its default thing (scroll, zoom)
 		event.preventDefault();
@@ -130,7 +122,6 @@ var JoyStick = (function (container, parameters) {
 			drawInternal();
 		}
 	}
-
 	function onTouchEnd(event) {
 		pressed = 0;
 		// If required reset position store variable
@@ -145,14 +136,12 @@ var JoyStick = (function (container, parameters) {
 		drawInternal();
 		//canvas.unbind('touchmove');
 	}
-
 	/**
 	 * @desc Events for manage mouse
 	 */
 	function onMouseDown(event) {
 		pressed = 1;
 	}
-
 	function onMouseMove(event) {
 		if (pressed === 1) {
 			movedX = event.pageX;
@@ -172,7 +161,6 @@ var JoyStick = (function (container, parameters) {
 			drawInternal();
 		}
 	}
-
 	function onMouseUp(event) {
 		pressed = 0;
 		// If required reset position store variable
@@ -187,7 +175,6 @@ var JoyStick = (function (container, parameters) {
 		drawInternal();
 		//canvas.unbind('mousemove');
 	}
-
 	/******************************************************
 	 * Public methods
 	 *****************************************************/
@@ -199,7 +186,6 @@ var JoyStick = (function (container, parameters) {
 	this.GetWidth = function () {
 		return canvas.width;
 	};
-
 	/**
 	 * @desc The height of canvas
 	 * @return Number of pixel height
@@ -207,7 +193,6 @@ var JoyStick = (function (container, parameters) {
 	this.GetHeight = function () {
 		return canvas.height;
 	};
-
 	/**
 	 * @desc Normalizzed value of X move of stick
 	 * @return Integer from -100 to +100
@@ -215,7 +200,6 @@ var JoyStick = (function (container, parameters) {
 	this.GetX = function () {
 		return (100 * ((movedX - centerX) / maxMoveStick)).toFixed();
 	};
-
 	/**
 	 * @desc Normalizzed value of Y move of stick
 	 * @return Integer from -100 to +100
@@ -223,7 +207,6 @@ var JoyStick = (function (container, parameters) {
 	this.GetY = function () {
 		return ((100 * ((movedY - centerY) / maxMoveStick)) * -1).toFixed();
 	};
-
 	/**
 	 * @desc Get the direction of the cursor as a string that indicates the cardinal points where this is oriented
 	 * @return String of cardinal point N, NE, E, SE, S, SW, W, NW and C when it is placed in the center
@@ -257,21 +240,19 @@ var JoyStick = (function (container, parameters) {
 				result += "E";
 			}
 		}
-
 		return result;
 	};
 });
 
 
 //---------------------------------- Bottom of page ----------------------------------------
+
 // Refresh Rate Per Second of joystick output
 var RRPS = 10
 
 var rightStick = new JoyStick('rightStickDiv');
 var leftStick = new JoyStick('leftStickDiv');
 
-
-// wait for ws connection before crash
 setInterval(function () {
 	RSX = rightStick.GetX();
 	RSY = rightStick.GetY();
