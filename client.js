@@ -15,8 +15,7 @@ ws.addEventListener("open", () => {
 
     // request camfeed
     ws.send(JSON.stringify({
-        method: 'request-camera',
-        params: ''
+        method: 'request-camera'
     }));    
 });    
 
@@ -29,7 +28,7 @@ ws.addEventListener('message', (e) => {
         }    
         handleMessage(m);
     } catch (err) {
-        console.log('[client] ' + e.data);
+        console.log('[client] Incomming message is not parseable to JSON. ' + e.data);
     }    
 });    
 
@@ -54,6 +53,8 @@ let handlers = {
     },    
     "impact": function (m) {
         lives -= m.params;
+        document.getElementById('ammo').attribute = lives;
+
         //show impact visuals on HTML
     }    
 };    
@@ -80,9 +81,10 @@ function handleMessage(m) {
 
 function shoot(){
     ws.send(JSON.stringify({
-        method: 'shoot',
-        params: true
+        method: 'shoot'
     }));    
     ammo -= 1;
+    document.getElementById('ammo').attribute = ammo;
+
 }    
 

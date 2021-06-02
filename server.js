@@ -1,6 +1,9 @@
+var spawn = require('child_process').spawn;
 const express = require('express');
 const path = require('path');
+
 const cv = require('opencv4nodejs');
+
 const WebSocket = require('ws');
 const SocketServer = require('ws').Server;
 
@@ -22,17 +25,14 @@ wss.on('connection', (ws, request, client) => {
     ws.on('message', function incoming(message) {
         try {
             let m = JSON.parse(message);
-            console.log(`[server] ${message}`)
+            console.log(`[server] <--- ${message}`)
             handleMessage(m);
         } catch (err) {
-            console.log('[server] Message is not parseable to JSON.');
-            broadcast(message);
+            console.log(`[server] ${err}`);
+
         }
     });
     ws.on('close', (ws) => {
-        if (!camOpen) {
-            wCap.release();
-        }
         console.log('Client disconnected');
     });
 });
@@ -41,34 +41,39 @@ wss.on('connection', (ws, request, client) => {
 // █░█ ▄▀█ █▄░█ █▀▄ █▀▀ █░░ █▀▀ █▀█ █▀
 // █▀█ █▀█ █░▀█ █▄▀ ██▄ █▄▄ ██▄ █▀▄ ▄█
 
+const wCap = new cv.VideoCapture(1);
 var camOpen = true
 var FPS = 25
 
 let handlers = {
     "request-camera": function (m) {
-        if (camOpen) {
-            const wCap = new cv.VideoCapture(1);
-            camOpen = false
+        if (camOpen == true) {
+            camOpen = false;
             setInterval(() => {
-                const frame = wCap.read();
-                const imageString = cv.imencode('.jpg', frame).toString('base64');
-                broadcast(JSON.stringify({
-                    method: 'frame-feed',
-                    params: imageString
-                }));
+                try {
+                    const frame = wCap.read();
+                    const imageString = cv.imencode('.jpg', frame).toString('base64');
+                    broadcast(JSON.stringify({
+                        method: 'frame-feed',
+                        params: imageString
+                    }));
+                } catch (err) {
+                    console.log(err);
+                }
             }, 1000 / FPS)
             broadcast('Cam feed has started')
         }
     },
     "rightStick": function (m) {
-        // m.params are x & y position + & - intergers
+        spawn('python', ['./Rstick.py', m.params.x, m.params.y]);
     },
     "leftStick": function (m) {
-        // m.params are x & y position + & - intergers
+        spawn('python', ['./Lstick.py', m.params.x, m.params.y]);
+
     },
     "shoot": function (m) {
-        // FIXME: call python script 
-        console.log('[Tank] SHOT HAS BEEN FIRED')
+        spawn('python', ['./shoot.py']);
+        console.log('[Tank] SHOT HAS BEEN FIRED');
     },
 };
 
@@ -81,7 +86,7 @@ function handleMessage(m) {
         return;
     }
     let method = m.method;
-    
+
     if (method) {
         if (handlers[method]) {
             let handler = handlers[method];
