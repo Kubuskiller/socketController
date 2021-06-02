@@ -28,7 +28,7 @@ wss.on('connection', (ws, request, client) => {
             console.log(`[server] <--- ${message}`)
             handleMessage(m);
         } catch (err) {
-            console.log(`[server] ${err}`);
+            console.log(`[server] ${message} #----# ${err}`);
 
         }
     });
@@ -106,7 +106,7 @@ function broadcast(msg) {
     });
 };
 
-//call this function from python
+//call this function from python on impact
 function hit(dmg) {
     broadcast(JSON.stringify({
         method: 'impact',
