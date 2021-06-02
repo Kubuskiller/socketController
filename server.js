@@ -73,7 +73,7 @@ let handlers = {
     },
     "shoot": function (m) {
         spawn('python', ['./shoot.py']);
-        console.log('[Tank] SHOT HAS BEEN FIRED');
+        console.log('[tank] just backfired');
     },
 };
 
@@ -108,6 +108,7 @@ function broadcast(msg) {
 
 //call this function from python on impact
 function hit(dmg) {
+    console.log('[tank] Was hit by a bullet ?or something else?');
     broadcast(JSON.stringify({
         method: 'impact',
         params: dmg
