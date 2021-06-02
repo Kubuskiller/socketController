@@ -53,7 +53,7 @@ let handlers = {
     },    
     "impact": function (m) {
         lives -= m.params;
-        document.getElementById('ammo').attribute = lives;
+        document.getElementById('ammo').innerHTML = lives;
 
         //show impact visuals on HTML
     }    
@@ -84,7 +84,7 @@ function shoot(){
         method: 'shoot'
     }));    
     ammo -= 1;
-    document.getElementById('ammo').attribute = ammo;
+    document.getElementById('ammo').innerHTML = ammo;
 
 }    
 
