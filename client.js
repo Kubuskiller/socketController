@@ -49,10 +49,14 @@ ws.onerror = (err) => {
 let handlers = {
     "frame-feed": function (m) {
         const imageElm = document.getElementById('image-feed');
-        imageElm.src = `data:image/jpeg;base64,${m.params}`;
+        imageElm.src = `data:image/jpeg;base64,${m.params.img}`;
+        sendTime = m.params.ping
+        pingDiff = Date.now() - sendTime
+        document.getElementById('ping').innerHTML = pingDiff;
     },    
     "impact": function (m) {
-        lives -= m.params;
+        damage = m.params.dmg 
+        lives -= damage;
         document.getElementById('ammo').innerHTML = lives;
 
         //show impact visuals on HTML

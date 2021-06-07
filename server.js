@@ -25,10 +25,10 @@ wss.on('connection', (ws, request, client) => {
     ws.on('message', function incoming(message) {
         try {
             let m = JSON.parse(message);
-            console.log(`[server] <--- ${message}`)
+            console.log(`[server] ${message}`)
             handleMessage(m);
         } catch (err) {
-            console.log(`[server] ${message} #----# ${err}`);
+            console.log(`[server] ERROR: ${err} #----# ${message}`);
 
         }
     });
@@ -55,7 +55,10 @@ let handlers = {
                     const imageString = cv.imencode('.jpg', frame).toString('base64');
                     broadcast(JSON.stringify({
                         method: 'frame-feed',
-                        params: imageString
+                        params: {
+                            ping: Date.now(),
+                            img: imageString
+                        }
                     }));
                 } catch (err) {
                     console.log(err);
@@ -107,10 +110,11 @@ function broadcast(msg) {
 };
 
 //call this function from python on impact
-function hit(dmg) {
+function hit(impact) {
     console.log('[tank] Was hit by a bullet ?or something else?');
     broadcast(JSON.stringify({
         method: 'impact',
-        params: dmg
+        params: {
+            dmg: impact}
     }));
 };
