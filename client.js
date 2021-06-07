@@ -48,10 +48,9 @@ ws.onerror = (err) => {
 
 let handlers = {
     "frame-feed": function (m) {
-        const imageElm = document.getElementById('image-feed');
-        imageElm.src = `data:image/jpeg;base64,${m.params.img}`;
-        sendTime = m.params.ping
-        pingDiff = Date.now() - sendTime
+        const imageElm = document.getElementById('cam-feed');
+        imageElm.src = `${m.params.img}`;
+        pingDiff = Date.now() - m.params.ping
         document.getElementById('ping').innerHTML = pingDiff;
     },    
     "impact": function (m) {
