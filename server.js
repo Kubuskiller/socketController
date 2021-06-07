@@ -3,9 +3,17 @@ const express = require('express');
 const path = require('path');
 
 const cv = require('opencv4nodejs');
+var NodeWebcam = require( "node-webcam" );
 
 const WebSocket = require('ws');
 const SocketServer = require('ws').Server;
+
+//options for camera capture
+var opts = {
+    quality: 100,
+    frames: 60,
+    device: false
+}
 
 // █░█░█ █▀▀ █▄▄ █▀ █▀█ █▀▀ █▄▀ █▀▀ ▀█▀
 // ▀▄▀▄▀ ██▄ █▄█ ▄█ █▄█ █▄▄ █░█ ██▄ ░█░
@@ -41,7 +49,6 @@ wss.on('connection', (ws, request, client) => {
 // █░█ ▄▀█ █▄░█ █▀▄ █▀▀ █░░ █▀▀ █▀█ █▀
 // █▀█ █▀█ █░▀█ █▄▀ ██▄ █▄▄ ██▄ █▀▄ ▄█
 
-const wCap = new cv.VideoCapture(1);
 var camOpen = true
 var FPS = 25
 
@@ -51,15 +58,16 @@ let handlers = {
             camOpen = false;
             setInterval(() => {
                 try {
-                    const frame = wCap.read();
-                    const imageString = cv.imencode('.jpg', frame).toString('base64');
-                    broadcast(JSON.stringify({
-                        method: 'frame-feed',
-                        params: {
-                            ping: Date.now(),
-                            img: imageString
-                        }
-                    }));
+                    NodeWebcam.capture( "test_picture", opts, function( err, data ) {
+                        broadcast(JSON.stringify({
+                            method: 'frame-feed',
+                            params: {
+                                ping: Date.now(),
+                                img: data
+                            }
+                        }));
+                    });
+                        
                 } catch (err) {
                     console.log(err);
                 }
