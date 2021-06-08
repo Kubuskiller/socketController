@@ -2,7 +2,11 @@ var spawn = require('child_process').spawn;
 const express = require('express');
 const path = require('path');
 
+<<<<<<< Updated upstream
 const cv = require('opencv4nodejs');
+=======
+var NodeWebcam = require( "node-webcam" );
+>>>>>>> Stashed changes
 
 const WebSocket = require('ws');
 const SocketServer = require('ws').Server;
