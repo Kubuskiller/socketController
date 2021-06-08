@@ -43,7 +43,7 @@ wss.on('connection', (ws, request, client) => {
 
 const wCap = new cv.VideoCapture(1);
 var camOpen = true
-var FPS = 25
+var FPS = 28
 
 let handlers = {
     "request-camera": function (m) {
