@@ -1,0 +1,41 @@
+body {
+    background-color: lightslategray;
+}
+
+.mainContainer {
+    display: flex;
+    justify-content: space-between;
+}
+
+#leftStickDiv {
+    width: 150px;
+    height: 150px;
+    margin: 50px;
+}
+
+#rightStickDiv {
+    width: 150px;
+    height: 150px;
+    margin: 50px;
+}
+
+.shootButton {
+margin-left: 130px;
+}
+
+.lifesImg {
+    width: 88px;
+    margin-bottom: 15px;
+}
+
+#lifes {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.ammoLable {
+    color: yellow;
+    margin-top: 15px;
+    font-size: 36px;
+    font-weight: bold;
+}

@@ -3,25 +3,34 @@
 
 <head>
     <title>open IC-Tank</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
-    <button onclick="shoot()">SHOOT</button>
-    <a>lives: <div id='lifes'>3</div></a>
-    <a>ammo: <div id='ammo'></div></a>
-    <a>Ping: <div id='ping'></div></a>
-    
-    <!-- recieve frames -->
-    <img id="image-feed">
 
-    <!-- JoySticks FIXME: styles are a mess and not working properly-->
-    <div id="leftStickDiv" style="width:200px;height:200px;margin:50px;display:inline-block"><canvas id="joystick" width="200"
-            height="200"></canvas></div>
-    <div id="rightStickDiv" style="width:200px;height:200px;margin:50px;display:inline-block"><canvas id="joystick" width="200"
-            height="200"></canvas></div>
 
-    <script src="client.js" type="text/javascript"></script>
-    <script src="joystick.js" type="text/javascript"></script>
+<!-- JoySticks FIXME: styles are a mess and not working properly-->
+<div>
+    <!--    <a>lives:-->
+    <!--        <div id='lifes'>3</div>-->
+    <!--    </a>-->
+    <div id="lifes">
+        <img class="lifesImg" src="img/png-transparent-red-heart-illustration-suit-playing-card-heart-card-game-ny-s-love-game-hearts-remov.png">
+        <img class="lifesImg" src="img/png-transparent-red-heart-illustration-suit-playing-card-heart-card-game-ny-s-love-game-hearts-remov.png">
+        <img class="lifesImg" src="img/png-transparent-red-heart-illustration-suit-playing-card-heart-card-game-ny-s-love-game-hearts-remov.png">
+    </div>
+
+</div>
+<div class="mainContainer">
+    <div id="leftStickDiv"></div>
+    <div id="rightStickDiv"></div>
+</div>
+
+<img class="shootButton" src="img/circle-logo-png-removebg-preview.png" width="66px" onclick="shoot()">
+<p class="ammoLable">AMMO: <span id='ammo'></span>/24</p>
+
+<script src="client.js" type="text/javascript"></script>
+<script src="joystick.js" type="text/javascript"></script>
 
 </body>
 
