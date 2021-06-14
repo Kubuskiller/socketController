@@ -1,7 +1,7 @@
 // █▀▀ ▄▀█ █▀▄▀█ █▀▀
 // █▄█ █▀█ █░▀░█ ██▄
 
-var lives = 500;
+var lifes = 500;
 var ammo = 25;
 
 
@@ -11,11 +11,8 @@ var ammo = 25;
 const ws = new WebSocket('ws://localhost:3000');
 
 ws.addEventListener("open", () => {
+    console.log('[Client] Connected to websocket.');
 
-    console.log('[Client] Stream requested.');
-    ws.send(JSON.stringify({
-        method: 'request-camera'
-    }));
 });
 
 ws.addEventListener('message', (e) => {
@@ -45,15 +42,11 @@ let handlers = {
     "frame-feed": function (m) {
         const imageElm = document.getElementById('image-feed');
         imageElm.src = `data:image/jpeg;base64,${m.params.img}`;
-        sendTime = m.params.ping
-        pingDiff = Date.now() - sendTime
-        document.getElementById('ping').innerHTML = pingDiff;
+        document.getElementById('ping').innerHTML = Date.now() - m.params.ping;
     },
     "impact": function (m) {
-        damage = m.params.dmg
-        lives -= damage;
-        document.getElementById('ammo').innerHTML = lives;
-
+        lifes -= m.params.dmg;
+        document.getElementById('lifes').innerHTML = lifes;
         //show impact visuals on HTML
     }
 };
@@ -68,12 +61,11 @@ function handleMessage(m) {
     }
     let method = m.method;
     if (method) {
-
         if (handlers[method]) {
             let handler = handlers[method];
             handler(m);
         } else {
-            console.log('[client] ### No handler defined for method ' + method + '.');
+            console.log('[client] No handler defined for method ' + method + '.');
         }
     }
 };
@@ -82,7 +74,10 @@ function shoot() {
     ws.send(JSON.stringify({
         method: 'shoot'
     }));
+    console.log('[Client] Stream requested.');
+    ws.send(JSON.stringify({
+        method: 'request-camera'
+    }));
     ammo -= 1;
     document.getElementById('ammo').innerHTML = ammo;
-
 }
