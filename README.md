@@ -4,6 +4,8 @@ A websocket server that inited to be run on Raspberry Pi, to recieve input that 
 
 # How to use #
 1. clone repo
-2. npm install *FIX: try 'npm install -g windows-build-tools' before 'npm install opencv4nodejs'*
-3. Copy path of server.js -> run 'node {path}' in cmd
-4. run a server on localhost and open index.html
+2. npm install 
+3. *FIX1: try install with Cmake*
+4. *FIX2: try 'npm install -g windows-build-tools' before 'npm install opencv4nodejs'*
+5. Copy path of server.js -> run 'node {path}' in cmd
+6. run a server on localhost and open index.html
