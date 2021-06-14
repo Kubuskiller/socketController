@@ -43,7 +43,7 @@ wss.on('connection', (ws, request, client) => {
 
 const wCap = new cv.VideoCapture(1);
 var camOpen = true
-var FPS = 28
+var FPS = 4
 
 let handlers = {
     "request-camera": function (m) {
@@ -52,11 +52,12 @@ let handlers = {
             setInterval(() => {
                 try {
                     const frame = wCap.read();
-                    const imageString = cv.imencode('.jpg', frame).toString('base64');
+                    let imageString = cv.imencode('.jpg', frame).toString('base64');
+                    let timestamp = Date.now()
                     broadcast(JSON.stringify({
                         method: 'frame-feed',
                         params: {
-                            ping: Date.now(),
+                            ping: timestamp,
                             img: imageString
                         }
                     }));

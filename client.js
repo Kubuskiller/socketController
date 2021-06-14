@@ -11,9 +11,8 @@ var ammo = 25;
 const ws = new WebSocket('ws://localhost:3000');
 
 ws.addEventListener("open", () => {
+    
     console.log('[Client] Connection to WebSocket server was opened.');
-
-    // request camfeed
     ws.send(JSON.stringify({
         method: 'request-camera'
     }));    
@@ -21,15 +20,11 @@ ws.addEventListener("open", () => {
 
 ws.addEventListener('message', (e) => {
     try {
-        let m = JSON.parse(e.data);
-        // remove cam frames from client log
-        if (m.method != 'frame-feed') {
-            console.log('[client] ' + e.data);
-        }    
+        let m = JSON.parse(e.data); 
         handleMessage(m);
     } catch (err) {
-        console.log('[client] Incomming message is not parseable to JSON. ' + e.data);
-    }    
+        console.log('[client] Incomming message is not parseable to JSON. ' + err);
+    } 
 });    
 
 ws.addEventListener('close', () => {
