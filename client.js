@@ -11,31 +11,31 @@ var ammo = 25;
 const ws = new WebSocket('ws://localhost:3000');
 
 ws.addEventListener("open", () => {
-    
-    console.log('[Client] Connection to WebSocket server was opened.');
+
+    console.log('[Client] Stream requested.');
     ws.send(JSON.stringify({
         method: 'request-camera'
-    }));    
-});    
+    }));
+});
 
 ws.addEventListener('message', (e) => {
     try {
-        let m = JSON.parse(e.data); 
+        let m = JSON.parse(e.data);
         handleMessage(m);
     } catch (err) {
-        console.log('[client] Incomming message is not parseable to JSON. ' + err);
-    } 
-});    
+        console.log('[client] Incomming message: ' + e.data);
+    }
+});
 
 ws.addEventListener('close', () => {
     console.log('[client] Connection closed.');
-});    
+});
 
 ws.onerror = (err) => {
     if (err.code == 'EHOSTDOWN') {
         console.log('[client] Error: server down.');
-    }    
-};    
+    }
+};
 
 
 // █░█ ▄▀█ █▄░█ █▀▄ █▀▀ █░░ █▀▀ █▀█ █▀
@@ -48,15 +48,15 @@ let handlers = {
         sendTime = m.params.ping
         pingDiff = Date.now() - sendTime
         document.getElementById('ping').innerHTML = pingDiff;
-    },    
+    },
     "impact": function (m) {
-        damage = m.params.dmg 
+        damage = m.params.dmg
         lives -= damage;
         document.getElementById('ammo').innerHTML = lives;
 
         //show impact visuals on HTML
-    }    
-};    
+    }
+};
 
 
 // █▀▀ █░█ █▄░█ █▀▀ ▀█▀ █ █▀█ █▄░█ █▀
@@ -65,7 +65,7 @@ let handlers = {
 function handleMessage(m) {
     if (m.method == undefined) {
         return;
-    }    
+    }
     let method = m.method;
     if (method) {
 
@@ -74,16 +74,15 @@ function handleMessage(m) {
             handler(m);
         } else {
             console.log('[client] ### No handler defined for method ' + method + '.');
-        }    
-    }    
-};    
+        }
+    }
+};
 
-function shoot(){
+function shoot() {
     ws.send(JSON.stringify({
         method: 'shoot'
-    }));    
+    }));
     ammo -= 1;
     document.getElementById('ammo').innerHTML = ammo;
 
-}    
-
+}

@@ -6,26 +6,32 @@
     <link rel="stylesheet" href="style.css">
 </head>
 
-<body>
-<div>
-    <div id="lifes">
-        <p>Ping: <p id="ping">-</p></p>
-        <img class="lifesImg" src="img/png-transparent-red-heart-illustration-suit-playing-card-heart-card-game-ny-s-love-game-hearts-remov.png">
-        <img class="lifesImg" src="img/png-transparent-red-heart-illustration-suit-playing-card-heart-card-game-ny-s-love-game-hearts-remov.png">
-        <img class="lifesImg" src="img/png-transparent-red-heart-illustration-suit-playing-card-heart-card-game-ny-s-love-game-hearts-remov.png">
+<body >
+    <div>
+        <div id="lifes">
+            <p>Ping: &nbsp<p id="ping">-</p>
+            </p>
+            <img class="lifesImg"
+                src="img/png-transparent-red-heart-illustration-suit-playing-card-heart-card-game-ny-s-love-game-hearts-remov.png">
+            <img class="lifesImg"
+                src="img/png-transparent-red-heart-illustration-suit-playing-card-heart-card-game-ny-s-love-game-hearts-remov.png">
+            <img class="lifesImg"
+                src="img/png-transparent-red-heart-illustration-suit-playing-card-heart-card-game-ny-s-love-game-hearts-remov.png">
+        </div>
+
+    </div>
+    <div class="mainContainer">
+        <div id="leftStickDiv"></div>
+        <div id="rightStickDiv"></div>
     </div>
 
-</div>
-<div class="mainContainer">
-    <div id="leftStickDiv"></div>
-    <div id="rightStickDiv"></div>
-</div>
+    <img class="shootButton" src="img/circle-logo-png-removebg-preview.png" width="66px" onclick="shoot()">
+    <p class="ammoLable">AMMO: <span id='ammo'>24</span>/24</p>
 
-<img class="shootButton" src="img/circle-logo-png-removebg-preview.png" width="66px" onclick="shoot()">
-<p class="ammoLable">AMMO: <span id='ammo'>24</span>/24</p>
+    <img id="image-feed">
 
-<script src="client.js" type="text/javascript"></script>
-<script src="joystick.js" type="text/javascript"></script>
+    <script src="client.js" type="text/javascript"></script>
+    <script src="joystick.js" type="text/javascript"></script>
 
 </body>
 

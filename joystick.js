@@ -101,6 +101,7 @@ var JoyStick = (function (container, parameters) {
 	function onTouchStart(event) {
 		pressed = 1;
 	}
+
 	function onTouchMove(event) {
 		// Prevent the browser from doing its default thing (scroll, zoom)
 		event.preventDefault();
@@ -122,6 +123,7 @@ var JoyStick = (function (container, parameters) {
 			drawInternal();
 		}
 	}
+
 	function onTouchEnd(event) {
 		pressed = 0;
 		// If required reset position store variable
@@ -142,6 +144,7 @@ var JoyStick = (function (container, parameters) {
 	function onMouseDown(event) {
 		pressed = 1;
 	}
+
 	function onMouseMove(event) {
 		if (pressed === 1) {
 			movedX = event.pageX;
@@ -161,6 +164,7 @@ var JoyStick = (function (container, parameters) {
 			drawInternal();
 		}
 	}
+
 	function onMouseUp(event) {
 		pressed = 0;
 		// If required reset position store variable
