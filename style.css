@@ -41,3 +41,12 @@ height: 80px;
     font-size: 36px;
     font-weight: bold;
 }
+
+#image-feed {
+    min-width: 100vw;
+    min-height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: -10;
+}
