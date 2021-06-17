@@ -40,6 +40,8 @@ wss.on('connection', (ws, request, client) => {
 // █▀█ █▀█ █░▀█ █▄▀ ██▄ █▄▄ ██▄ █▀▄ ▄█
 
 const wCap = new cv.VideoCapture(1);
+wCap.set(cv.CAP_PROP_FRAME_WIDTH, 1280)
+wCap.set(cv.CAP_PROP_FRAME_HEIGHT, 720)
 var camOpen = true
 var FPS = 18
 
