@@ -12,7 +12,10 @@ const ws = new WebSocket('ws://localhost:3000');
 
 ws.addEventListener("open", () => {
     console.log('[Client] Connected to websocket.');
-
+    ws.send(JSON.stringify({
+        method: 'request-camera'
+    }));
+    console.log('[Client] Stream requested.');
 });
 
 ws.addEventListener('message', (e) => {
@@ -73,10 +76,6 @@ function handleMessage(m) {
 function shoot() {
     ws.send(JSON.stringify({
         method: 'shoot'
-    }));
-    console.log('[Client] Stream requested.');
-    ws.send(JSON.stringify({
-        method: 'request-camera'
     }));
     ammo -= 1;
     document.getElementById('ammo').innerHTML = ammo;

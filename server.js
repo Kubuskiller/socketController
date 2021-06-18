@@ -22,6 +22,9 @@ const wss = new SocketServer({
 });
 
 wss.on('connection', (ws, request, client) => {
+
+    console.log('Client connected')
+
     ws.on('message', function incoming(message) {
         try {
             let m = JSON.parse(message);
