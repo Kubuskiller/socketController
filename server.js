@@ -72,13 +72,17 @@ let handlers = {
     },
     "rightStick": function (m) {
         spawn('python', ['./Rstick.py', m.params.x, m.params.y]);
+        console.log('[tank] moving X: ' + m.params.x + 'Y: ' + m.params.y);
     },
     "leftStick": function (m) {
         spawn('python', ['./Lstick.py', m.params.x, m.params.y]);
+        console.log('[tank] barrel X: ' + m.params.x + 'Y: ' + m.params.y);
+
 
     },
     "shoot": function (m) {
         spawn('python', ['./shoot.py']);
+        console.log('[tank] fired');
     },
 };
 

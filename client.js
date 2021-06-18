@@ -11,11 +11,11 @@ var ammo = 25;
 const ws = new WebSocket('ws://localhost:3000');
 
 ws.addEventListener("open", () => {
-    console.log('[Client] Connected to websocket.');
+    console.log('[client] Connected to websocket.');
     ws.send(JSON.stringify({
         method: 'request-camera'
     }));
-    console.log('[Client] Stream requested.');
+    console.log('[client] Stream requested.');
 });
 
 ws.addEventListener('message', (e) => {
@@ -23,7 +23,7 @@ ws.addEventListener('message', (e) => {
         let m = JSON.parse(e.data);
         handleMessage(m);
     } catch (err) {
-        console.log('[client] Incomming message: ' + e.data);
+        console.log('[server] Incomming message: ' + e.data);
     }
 });
 
