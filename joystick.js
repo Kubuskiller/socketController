@@ -251,15 +251,19 @@ var JoyStick = (function (container, parameters) {
 
 //---------------------------------- Bottom of page ----------------------------------------
 
-// Refresh Rate Per Second of joystick output
-var RRPS = 10
-
+// Create two joystick objects
 var rightStick = new JoyStick('rightStickDiv');
 var leftStick = new JoyStick('leftStickDiv');
 
+// Refresh Rate Per Second of joystick output
+var RRPS = 10
+
 setInterval(function () {
+
 	RSX = rightStick.GetX();
 	RSY = rightStick.GetY();
+	
+	// If the joysticks a moving send data otherwise dont
 	if (RSX && RSY != 0) {
 		ws.send(JSON.stringify({
 			method: 'rightStick',
@@ -272,8 +276,11 @@ setInterval(function () {
 }, 1000 / RRPS);
 
 setInterval(function () {
+
 	LSX = leftStick.GetX();
 	LSY = leftStick.GetY();
+	
+	// If the joysticks a moving send data otherwise dont
 	if (LSX && LSY != 0) {
 		ws.send(JSON.stringify({
 			method: 'leftStick',
